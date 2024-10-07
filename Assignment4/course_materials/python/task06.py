@@ -28,11 +28,13 @@ g.add((ns.Researcher, RDF.type, RDFS.Class))
 for s, p, o in g:
   print(s,p,o)
 
-"""**TASK 6.1: Create new classes for "School" and "University. Add an rdfs:label in Spanish"**
+"""**TASK 6.1: Create a new class named "University"**
 
 """
 
 # TO DO
+ns = Namespace("http://somewhere#")
+g.add((ns.University, RDF.type, RDFS.Class))
 # Visualize the results
 for s, p, o in g:
   print(s,p,o)
@@ -40,6 +42,8 @@ for s, p, o in g:
 """**TASK 6.2: Add "Researcher" as a subclass of "Person"**"""
 
 # TO DO
+g.add((ns.Researcher, RDFS.subClassOf, ns.Person))
+
 # Visualize the results
 for s, p, o in g:
   print(s,p,o)
@@ -47,6 +51,8 @@ for s, p, o in g:
 """**TASK 6.3: Create a new individual of Researcher named "Jane Smithers"**"""
 
 # TO DO
+g.add((ns.JaneSmithers, RDF.type, ns.Researcher))
+
 # Visualize the results
 for s, p, o in g:
   print(s,p,o)
@@ -54,14 +60,29 @@ for s, p, o in g:
 """**TASK 6.4: Add to the individual JaneSmithers the email address, fullName, given and family names. Use the https://schema.org vocabulary**"""
 
 # TO DO
+schema = Namespace("https://schema.org/")
+g.add((ns.JaneSmithers, schema.email, Literal("jane.smithers@example.com")))
+g.add((ns.JaneSmithers, schema.name, Literal("Jane Smithers")))
+g.add((ns.JaneSmithers, schema.givenName, Literal("Jane")))
+g.add((ns.JaneSmithers, schema.familyName, Literal("Smithers")))
 # Visualize the results
+for s, p, o in g:
+  print(s,p,o)
 
 """**TASK 6.5: Add UPM as the university where John Smith works. Use the "https://example.org/ namespace**"""
 
 # TO DO
+example = Namespace("https://example.org/")
+g.add((example.UPM, RDF.type, ns.University))
+g.add((ns.JohnSmith, example.worksAt, example.UPM))
 # Visualize the results
-
+for s, p, o in g:
+  print(s,p,o)
 """**Task 6.6: Add that Jown knows Jane using the FOAF vocabulary. Make sure the relationship exists.**"""
 
 # TO DO
+foaf = Namespace("http://xmlns.com/foaf/0.1/")
+g.add((ns.JohnSmith, foaf.knows, ns.JaneSmithers))
 # Visualize the results
+for s, p, o in g:
+  print(s,p,o)
